@@ -10,8 +10,12 @@ import (
 func SetupRouter() *gin.Engine {
 	router := gin.Default()
 
-	// Routes
-	router.GET("/create", product.Create)
+	// Define routes
+	router.GET("/getall", product.GetAll)
+	router.GET("/getbyid/:id", product.GetByID)
+	router.GET("/getbytype/:type", product.GetByType)
+
+	router.POST("/add", product.Create)
 
 	return router
 }

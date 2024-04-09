@@ -7,21 +7,70 @@
   "timeout": "3s",
   "endpoints": [
     {
-      "endpoint": "/test",
+      "endpoint": "/product/getall",
       "method": "GET",
+      "output_encoding": "no-op",
       "backend": [
         {
-          "url_pattern": "/create",
-          "host": [
-            "http://product:8081"
-          ],
-          "method": "GET"
+          "url_pattern": "/getall",
+          "encoding": "no-op",
+          "sd": "static",
+          "method": "GET",
+          "host": ["http://product:8081"],
+          "disable_host_sanitize": false
+        }
+      ]
+    },
+    {
+      "endpoint": "/product/getbyid/{id}",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/getbyid/{id}",
+          "method": "GET",
+          "sd": "static",
+          "host": ["http://product:8081"],
+          "disable_host_sanitize": false
         }
       ],
-      "output_encoding": "json"
+      "input_query_strings": ["id"]
+    },
+    {
+      "endpoint": "/product/getbytype/{type}",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/getbytype/{type}",
+          "method": "GET",
+          "sd": "static",
+          "host": ["http://product:8081"],
+          "disable_host_sanitize": false
+        }
+      ],
+      "input_query_strings": ["type"]
+    },
+    {
+      "endpoint": "/product/add",
+      "method": "POST",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/add",
+          "encoding": "json",
+          "sd": "static",
+          "method": "POST",
+          "host": ["http://product:8081"],
+          "disable_host_sanitize": false
+        }
+      ]
     }
   ],
   "extra_config": {
+    "router": {
+      "return_error_msg": true
+    },
     "telemetry/metrics": {
       "collection_time": "10s",
       "listen_address": ":8090"
@@ -34,21 +83,10 @@
       "password": "pas5w0rd"
     },
     "security/cors": {
-      "allow_origins": [
-        "*"
-      ],
-      "allow_methods": [
-        "POST",
-        "GET"
-      ],
-      "allow_headers": [
-        "Origin",
-        "Authorization",
-        "Content-Type"
-      ],
-      "expose_headers": [
-        "Content-Length"
-      ],
+      "allow_origins": ["*"],
+      "allow_methods": ["POST", "GET"],
+      "allow_headers": ["Origin", "Authorization", "Content-Type"],
+      "expose_headers": ["Content-Length"],
       "max_age": "12h"
     }
   },
