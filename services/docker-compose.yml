@@ -1,13 +1,15 @@
 version: "3"
 services:
- krakend:
+  #API gateway with Krakend
+  krakend:
     image: devopsfaith/krakend
     ports:
       - 8080:8080
     volumes:
       - ./gateway:/etc/krakend
 
- grafana:
+  # Grafana dashboard to monitor the gateway
+  grafana:
     image: grafana/grafana:9.1.2
     ports:
       - "4000:3000"
@@ -18,7 +20,8 @@ services:
     environment:
       - GF_LOG_LEVEL=debug
 
- influxdb:
+  # InfluxDB for storing telementric data of the gateway
+  influxdb:
     image: influxdb:1.8.10
     environment:
       - "INFLUXDB_DB=krakend"
@@ -28,3 +31,13 @@ services:
       - "INFLUXDB_ADMIN_PASSWORD=supersecretpassword"
     ports:
       - "8086:8086"
+
+  #microservices
+
+  #Product service
+  product:
+    build:
+      context: ./product
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
