@@ -1,0 +1,28 @@
+@startuml c1
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+title Context diagram for Wallmarkt
+
+'Users'
+SHOW_PERSON_OUTLINE()
+Person(customer, Customer, "A customer of Wallmarkt who shops online")
+Person(employee, Employee, "An employee of Wallmarkt who manages the warehouse")
+
+'System'
+System(wallmarkt, "Wallmarkt application", "Microservices application with two web-based interfaces and an API gateway")
+
+'External'
+System_Ext(auth0, "Auth0 Identity provider", "Provides authentication and authorization services")
+System_Ext(stripe, "Stripe payment service", "Provides payment processing services")
+
+'References'
+Rel(customer, wallmarkt, "Shops using")
+Rel(employee, wallmarkt, "Manages webshop using")
+Rel_Neighbor(wallmarkt, auth0, "Authenticates using")
+Rel(wallmarkt, stripe, "Processes payments using")
+Rel(auth0, customer, "Authenticates")
+Rel(auth0, employee, "Authenticates")
+Rel(stripe, customer, "Sends pay request")
+
+'Extras'
+SHOW_LEGEND()
+@enduml

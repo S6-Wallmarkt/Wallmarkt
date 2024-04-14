@@ -1,0 +1,10 @@
+= Wallmarkt Documentation
+This document includes technical documentation for the Wallmarkt project.
+
+These are the context and container diagram
+
+image::c1.png[Context diagram of Wallmarkt]
+
+And the container diagram as well
+
+image::c2.png[Container diagram of Wallmarkt]
