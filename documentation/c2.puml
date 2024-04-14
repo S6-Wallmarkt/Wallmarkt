@@ -1,0 +1,78 @@
+@startuml c2
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+title Container diagram for Wallmarkt
+
+'Users'
+SHOW_PERSON_OUTLINE()
+Person(customer, Customer, "Shops at Wallmarkt")
+Person(employee, Employee, "Works for Wallmarkt")
+
+'Containers'
+System_Boundary(c1, "Wallmarkt Microservices") {
+    'Web apps'
+    Container(web_shop, "Shop web app", "Svelte.js", "Displays products and allows customers to place orders")
+    Container(web_wms, "WMS web app", "Sveltje.js", "Allows employees to manage inventory and orders")
+    Container(web_monitor, "Monitoring web app", "Grafana", "Monitors and alerts on the health and usage of the microservices")
+
+    'APIs'
+    Container(gateway_api, "API Gateway", "KrakenD", "Routes requests to the appropriate microservice and implement security measures as main entrypoint")
+    Container(product_api, "Product service", "Go, Gin", "Handles all product and product details related business logic")
+    Container(shopping_cart_api, "Shopping cart service", "Go, Gin", "Handles all shopping cart related business logic")
+    Container(stock_api, "Stock service", "Go, Gin", "Handles all stock and stock mutations related business logic")
+    Container(shipping_api, "Shipping service", "Go, Gin", "Handles all shipping related business logic")
+    Container(order_api, "Order service", "Go, Gin", "Handles all order related business logic")
+    Container(user_api, "User service", "Go, Gin", "Handles all user related business logic")
+
+    'Databases'
+    ContainerDb(product_database, "Product database", "T.B.D.", "Stores product information, including description, price, etc.")
+    ContainerDb(shopping_cart_database, "Shopping cart database", "T.B.D.", "Stores user shopping cart information and prevents duplicate orders")
+    ContainerDb(stock_database, "Stock database", "T.B.D.", "Stores stock information, including quantity, location, etc.")
+    ContainerDb(shipping_database, "Shipping database", "T.B.D.", "Stores shipping information, including tracking number, delivery date, etc.")
+    ContainerDb(order_database, "Order database", "T.B.D.", "Stores order information, including products, quantity, price, etc.")
+
+    'Extras'
+    Container(message_broker, "Message broker", "T.B.D.", "Handles asynchronous communication between microservices")
+    ContainerDb(influx, "Telementry database", "InfluxDB", "Stores telemetry data from the microservices")
+}
+
+'External'
+System_Ext(auth0, "Auth0", "Authenticates and authorizes customers using OpenID Connect")
+System_Ext(stripe, "Stripe", "Third-party payment processor")
+
+'Users to'
+Rel(customer, web_shop, "Uses")
+Rel(employee, web_wms, "Uses")
+
+'Web apps to'
+Rel(web_shop, gateway_api, "Routes to", "HTTPS")
+Rel(web_wms, gateway_api, "Routes to", "HTTPS")
+Rel(web_monitor, influx, "Queries telemetry data from", "HTTPS")
+Rel(web_shop, auth0, "Authenticates with", "HTTPS")
+Rel(web_wms, auth0, "Authenticates with", "HTTPS")
+
+'Gateway to'
+Rel_Neighbor(gateway_api, influx, "Sends telemetry data to", "UDP")
+Rel(gateway_api, product_api, "Routes to", "HTTPS")
+Rel(gateway_api, shopping_cart_api, "Routes to", "HTTPS")
+Rel(gateway_api, stock_api, "Routes to", "HTTPS")
+Rel(gateway_api, shipping_api, "Routes to", "HTTPS")
+Rel(gateway_api, order_api, "Routes to", "HTTPS")
+Rel(gateway_api, user_api, "Routes to", "HTTPS")
+Rel(gateway_api, auth0, "Authenticates with", "HTTPS")
+
+'APIs to'
+Rel(product_api, product_database, "Reads from and writes to", "T.B.D.")
+Rel(shopping_cart_api, shopping_cart_database, "Reads from and writes to", "T.B.D.")
+Rel(stock_api, stock_database, "Reads from and writes to", "T.B.D.")
+Rel(shipping_api, shipping_database, "Reads from and writes to", "T.B.D.")
+Rel(order_api, order_database, "Reads from and writes to", "T.B.D.")
+Rel(user_api, auth0, "Retrieves user data with", "HTTPS")
+Rel(order_api, stripe, "Processes payments with", "HTTPS")
+
+'to Broker'
+
+
+
+'Extras'
+SHOW_LEGEND()
+@enduml
