@@ -13,5 +13,15 @@ COPY krakend.template.json /etc/krakend/krakend.template.json
 # Install gettext
 RUN apk add gettext
 
-# Set the entrypoint to run envsubst and start KrakenD based of the template
+# Create a non-root user
+RUN addgroup -S nonroot \
+    && adduser -S nonroot -G nonroot
+
+# Change the ownership of the /etc/krakend directory to the nonroot user
+RUN chown -R nonroot:nonroot /etc/krakend
+
+# Set the nonroot user
+USER nonroot
+
+# Set the entrypoint to run envsubst and start KrakenD based on the template
 CMD envsubst < /etc/krakend/krakend.template.json > /etc/krakend/krakend.json && krakend run -c /etc/krakend/krakend.json

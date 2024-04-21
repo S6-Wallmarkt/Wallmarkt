@@ -14,10 +14,20 @@ COPY . .
 # Build go application
 RUN CGO_ENABLED=0 GOOS=linux go build -o wallmarkt-product-service ./cmd
 
+# Create nonroot user
+FROM alpine:latest AS security_provider
+RUN addgroup -S nonroot \
+    && adduser -S nonroot -G nonroot
+
 # Use a minimal base image for the final image
-FROM scratch
+FROM scratch AS production
+# Copy the nonroot user
+COPY --from=security_provider /etc/passwd /etc/passwd
 # Copy the built binary from the builder stage
 COPY --from=builder /app/wallmarkt-product-service /wallmarkt-product-service
+
+# Set nonroot user
+USER nonroot
 
 # Expose the port
 EXPOSE 8081
