@@ -15,7 +15,7 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -o wallmarkt-product-service ./cmd
 
 # Create nonroot user
-FROM alpine:latest AS security_provider
+FROM alpine:3.19.1 AS security_provider
 RUN addgroup -S nonroot \
     && adduser -S nonroot -G nonroot
 
