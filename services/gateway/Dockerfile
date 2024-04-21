@@ -11,7 +11,7 @@ ENV INFLUX_USER_PASSWORD=${INFLUX_USER_PASSWORD}
 COPY krakend.template.json /etc/krakend/krakend.template.json
 
 # Install gettext
-RUN apk add gettext
+RUN apk --no-cache add gettext
 
 # Create a non-root user
 RUN addgroup -S nonroot \
