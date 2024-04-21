@@ -72,15 +72,15 @@
       "return_error_msg": true
     },
     "telemetry/metrics": {
-      "collection_time": "10s",
+      "collection_time": "30s",
       "listen_address": ":8090"
     },
     "telemetry/influx": {
-      "address": "http://influxdb:8086",
-      "ttl": "5s",
-      "buffer_size": 0,
-      "username": "krakend-dev",
-      "password": "pas5w0rd"
+      "address": "$INFLUX_HOST:$INFLUX_PORT",
+      "ttl": "25s",
+      "buffer_size": 50,
+      "username": "$INFLUX_USER",
+      "password": "$INFLUX_USER_PASSWORD"
     },
     "security/cors": {
       "allow_origins": ["*"],

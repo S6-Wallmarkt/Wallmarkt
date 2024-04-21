@@ -1,0 +1,53 @@
+# Debug docker-compose file
+version: "3"
+services:
+  #API gateway with Krakend
+  krakend:
+    build:
+      context: /services/gateway
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      - INFLUX_HOST=${INFLUX_HOST}
+      - INFLUX_PORT=${INFLUX_PORT}
+      - INFLUX_USER=${INFLUX_USER}
+      - INFLUX_USER_PASSWORD=${INFLUX_USER_PASSWORD}
+
+  # Grafana dashboard to monitor the gateway
+  grafana:
+    build:
+      context: /services/gateway/monitoring/grafana
+      dockerfile: Dockerfile
+    ports:
+      - "4000:3000"
+    environment:
+      - GF_LOG_LEVEL=debug
+      - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
+      - INFLUX_HOST=${INFLUX_HOST}
+      - INFLUX_PORT=${INFLUX_PORT}
+      - INFLUX_USER=${INFLUX_USER}
+      - INFLUX_USER_PASSWORD=${INFLUX_USER_PASSWORD}
+
+  # InfluxDB for storing telementric data of the gateway
+  influxdb:
+    image: influxdb:1.8.10
+    environment:
+      - "INFLUXDB_DB=krakend"
+      - "INFLUXDB_USER=${INFLUX_USER}"
+      - "INFLUXDB_USER_PASSWORD=${INFLUX_USER_PASSWORD}"
+      - "INFLUXDB_ADMIN_USER=${INFLUX_ADMIN_USER}"
+      - "INFLUXDB_ADMIN_PASSWORD=${INFLUX_ADMIN_PASSWORD}"
+    ports:
+      - "8086:8086"
+
+  #microservices
+
+  #Product service
+  product:
+    build:
+      context: /services/product
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
