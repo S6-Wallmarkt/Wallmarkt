@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "documentation/**"
+      - ".github/workflows/docs-as-code.yml"
 
 permissions:
   contents: write
