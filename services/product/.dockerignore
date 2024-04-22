@@ -14,3 +14,6 @@ logs/
 Dockerfile
 docker-compose.yml
 .dockerignore
+
+# Go test files
+*_test.go

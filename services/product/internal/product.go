@@ -1,11 +1,9 @@
 package internal
 
 import (
-	"net/http"
-	"strconv"
+	"errors"
 
 	"github.com/S6-Wallmarkt/Wallmarkt/services/product/models"
-	"github.com/gin-gonic/gin"
 )
 
 // List of mock products
@@ -53,87 +51,48 @@ var products = []models.Product{
 }
 
 // GetAll function to get all products
-func GetAll(c *gin.Context) {
-	c.JSON(http.StatusOK, products)
+func GetAll() []models.Product {
+	return products
 }
 
 // Get function to get product by id
-func GetByID(c *gin.Context) {
-
-	// Check for id param, if not found return an error
-	id := c.Param("id")
-	if id == "" {
-		// Handle the case where id is an empty string
-		c.JSON(http.StatusBadRequest, gin.H{"error": "ID is required"})
-		return
-	}
-
-	// Convert id to an integer if fails return error
-	idInt, err := strconv.Atoi(id)
-	if err != nil {
-		// Handle the case where id is not a valid integer
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
-		return
-	}
-
-	// Find the product with the given id and return it
+func GetByID(id int) (models.Product, error) {
 	for _, product := range products {
-		if product.ID == idInt {
-			c.JSON(http.StatusOK, product)
-			return
+		if product.ID == id {
+			return product, nil
 		}
 	}
-
-	// If no product found with given id return error
-	c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+	return models.Product{}, errors.New("product not found")
 }
 
 // Get function to get products by type
-func GetByType(c *gin.Context) {
-	var filteredProducts []models.Product
-
-	// Check for type param, if not found return an error
-	_type := c.Param("type")
-	if _type == "" {
-		// Handle the case where type is an empty string
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Type is required"})
-		return
-	}
+func GetByType(_type string) []models.Product {
+	filteredProducts := []models.Product{}
 
 	// Add product to filteredProducts if it has the given type
 	for _, product := range products {
 		for _, productType := range product.Types {
-			if productType == c.Param("type") {
+			if productType == _type {
 				filteredProducts = append(filteredProducts, product)
 				break
 			}
 		}
 	}
 
-	// If no products found with given type return error
-	if len(filteredProducts) == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Products not found"})
-		return
-	}
-
-	// Return the filtered products
-	c.JSON(http.StatusOK, filteredProducts)
+	return filteredProducts
 }
 
 // Post function to create new product
-func Create(c *gin.Context) {
-	var product models.Product
-
-	// Bind the JSON data from the request body to the product struct
-	if err := c.ShouldBindJSON(&product); err != nil {
-		// Handle the case where JSON binding fails
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON data"})
-		return
+func Create(product models.Product) (models.Product, error) {
+	// Check if the product already exists
+	for _, p := range products {
+		if p.ID == product.ID {
+			return models.Product{}, errors.New("product already exists")
+		}
 	}
 
 	// Add the new product to the products slice
 	products = append(products, product)
 
-	// Return the created product
-	c.JSON(http.StatusCreated, product)
+	return product, nil
 }
