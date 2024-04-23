@@ -21,9 +21,8 @@ jobs:
         with:
           go-version: 1.22.1
       - name: Run tests with coverage for services/product
+        working-directory: services/product
         run: go test -coverprofile coverage.out ./...
-      - name: List files
-        run: ls -R
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
