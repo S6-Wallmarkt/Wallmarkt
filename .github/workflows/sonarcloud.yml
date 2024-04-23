@@ -31,7 +31,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=S6-Wallmarkt-Product-service
+            -Dsonar.projectKey=S6-Wallmarkt_Wallmarkt
             -Dsonar.organization=s6-wallmarkt
             -Dsonar.sources=./services/product
             -Dsonar.go.coverage.reportPaths=services/product/coverage.out
