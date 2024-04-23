@@ -1,10 +1,13 @@
-name: Build
+name: Sonarcloud - Product service
 on:
   push:
     branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+    # Only run on changes to the services/product directory
+    paths:
+      - "services/product/**"
 jobs:
   sonarcloud:
     name: SonarCloud
@@ -24,11 +27,6 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_PRODUCT }}
         with:
-          args: >
-            -Dsonar.projectKey=S6-Wallmarkt_Wallmarkt
-            -Dsonar.organization=s6-wallmarkt
-            -Dsonar.sources=./services/product
-            -Dsonar.go.coverage.reportPaths=services/product/coverage.out
-            -Dsonar.test.inclusions=**/*_test.go
+          projectBaseDir: services/product
