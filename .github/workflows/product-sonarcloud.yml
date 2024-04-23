@@ -28,10 +28,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_PRODUCT }}
-        with:
-          args: >
-            -Dsonar.projectKey=s6-wallmarkt_Product_service
-            -Dsonar.organization=s6-wallmarkt
-            -Dsonar.sources=./services/product
-            -Dsonar.go.coverage.reportPaths=services/product/coverage.out
-            -Dsonar.test.inclusions=**/*_test.go

@@ -21,8 +21,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_GATEWAY }}
-        with:
-          args: >
-            -Dsonar.projectKey=s6-wallmarkt_Gateway
-            -Dsonar.organization=s6-wallmarkt
-            -Dsonar.sources=./services/gateway
