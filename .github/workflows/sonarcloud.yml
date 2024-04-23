@@ -20,10 +20,6 @@ jobs:
       - name: Run tests with coverage for services/product
         working-directory: services/product
         run: go test -coverprofile coverage.out ./...
-      - name: List files
-        run: |
-          cd services/product
-          ls -la
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
