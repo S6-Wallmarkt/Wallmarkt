@@ -1,10 +1,13 @@
-name: Build
+name: Sonarcloud - Frontend WMS
 on:
   push:
     branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+    # Only run on changes to the services/gateway directory
+    paths:
+      - "web/wms/**"
 jobs:
   sonarcloud:
     name: SonarCloud
@@ -13,22 +16,13 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: 1.22.1
-      - name: Run tests with coverage for services/product
-        working-directory: services/product
-        run: go test -coverprofile coverage.out ./...
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_GATEWAY }}
         with:
           args: >
-            -Dsonar.projectKey=S6-Wallmarkt_Wallmarkt
+            -Dsonar.projectKey=s6-wallmarkt_Frontend_WMS
             -Dsonar.organization=s6-wallmarkt
-            -Dsonar.sources=./services/product
-            -Dsonar.go.coverage.reportPaths=services/product/coverage.out
-            -Dsonar.test.inclusions=**/*_test.go
+            -Dsonar.sources=./web/wms

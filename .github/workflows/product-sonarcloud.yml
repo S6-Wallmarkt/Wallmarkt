@@ -1,0 +1,37 @@
+name: Sonarcloud - Product service
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+    # Only run on changes to the services/product directory
+    paths:
+      - "services/product/**"
+jobs:
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.22.1
+      - name: Run tests with coverage for services/product
+        working-directory: services/product
+        run: go test -coverprofile coverage.out ./...
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_PRODUCT }}
+        with:
+          args: >
+            -Dsonar.projectKey=s6-wallmarkt_Product_service
+            -Dsonar.organization=s6-wallmarkt
+            -Dsonar.sources=./services/product
+            -Dsonar.go.coverage.reportPaths=services/product/coverage.out
+            -Dsonar.test.inclusions=**/*_test.go
