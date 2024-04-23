@@ -31,3 +31,4 @@ jobs:
             -Dsonar.organization=s6-wallmarkt
             -Dsonar.sources=./services/product
             -Dsonar.go.coverage.reportPaths=services/product/coverage.out
+            -Dsonar.test.inclusions=**/*_test.go
