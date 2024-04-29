@@ -2,6 +2,10 @@
 	import { user } from '$lib/stores/auth';
 </script>
 
+<svelte:head>
+	<title>WMS - Products</title>
+</svelte:head>
+
 <div class="p-4">
 	<h1>This is the Products page</h1>
 	{#if $user}

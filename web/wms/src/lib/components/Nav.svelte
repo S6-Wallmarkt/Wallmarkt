@@ -21,7 +21,7 @@
 		class="w-full"
 	>
 		{#each tabs as tab}
-			{#if $isAuthenticated && $user?.userroles.includes('Warehouse-Operator')}
+			{#if $isAuthenticated && $user?.userroles?.includes('Warehouse-Operator')}
 				<TabAnchor href={tab.href} selected={$page.url.pathname === tab.href}>{tab.name}</TabAnchor>
 			{/if}
 		{/each}
