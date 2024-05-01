@@ -16,8 +16,7 @@
           "roles_key": "https://wallmarkt.com/roles",
           "roles": ["Warehouse-Operator"],
           "audience": ["$AUTH0_AUDIENCE"],
-          "jwk_url": "https://$AUTH0_DOMAIN/.well-known/jwks.json",
-          "operation_debug": true
+          "jwk_url": "https://$AUTH0_DOMAIN/.well-known/jwks.json"
         }
       },
       "backend": [
