@@ -13,6 +13,8 @@ services:
       - INFLUX_PORT=${INFLUX_PORT}
       - INFLUX_USER=${INFLUX_USER}
       - INFLUX_USER_PASSWORD=${INFLUX_USER_PASSWORD}
+      - AUTH0_DOMAIN=${AUTH0_DOMAIN}
+      - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
 
   # Grafana dashboard to monitor the gateway
   grafana:
