@@ -10,6 +10,16 @@
       "endpoint": "/product/getall",
       "method": "GET",
       "output_encoding": "no-op",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "RS256",
+          "roles_key": "https://wallmarkt.com/roles",
+          "roles": ["Warehouse-Operator"],
+          "audience": ["$AUTH0_AUDIENCE"],
+          "jwk_url": "https://$AUTH0_DOMAIN/.well-known/jwks.json",
+          "operation_debug": true
+        }
+      },
       "backend": [
         {
           "url_pattern": "/getall",

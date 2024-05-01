@@ -1,5 +1,5 @@
-<script lang="ts">
-	import { user } from '$lib/stores/auth';
+<script>
+	export let data;
 </script>
 
 <svelte:head>
@@ -7,10 +7,22 @@
 </svelte:head>
 
 <div class="p-4">
-	<h1>This is the Products page</h1>
-	{#if $user}
-		<p>Welcome, {$user?.name}</p>
-	{:else}
-		<p>You are not logged in</p>
-	{/if}
+	<div>
+		{#if data}
+			{#each data.props.products as product}
+				<div class="card p-4 m-4 space-y-2 variant-glass-primary">
+					<h2 class="">{product.name}</h2>
+					<p>{product.description}</p>
+					<p>€ {product.price}</p>
+					<div class="space-x-2">
+						{#each product.types as type}
+							<span class="chip variant-filled-secondary">{type}</span>
+						{/each}
+					</div>
+				</div>
+			{/each}
+		{:else}
+			<p>No products found</p>
+		{/if}
+	</div>
 </div>

@@ -5,7 +5,10 @@ import { user, isAuthenticated, popupOpen } from '$lib/stores/auth';
 async function createClient() {
 	const auth0Client = await createAuth0Client({
 		domain: import.meta.env.VITE_AUTH0_DOMAIN,
-		clientId: import.meta.env.VITE_AUTH0_CLIENT_ID
+		clientId: import.meta.env.VITE_AUTH0_CLIENT_ID,
+		authorizationParams: {
+			audience: import.meta.env.VITE_AUTH0_AUDIENCE
+		}
 	});
 	return auth0Client;
 }
