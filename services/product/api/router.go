@@ -1,13 +1,16 @@
 package api
 
 import (
+	"fmt"
+	"log"
 	"net/http"
-	"strconv"
 
 	productLogic "github.com/S6-Wallmarkt/Wallmarkt/services/product/internal"
 	"github.com/S6-Wallmarkt/Wallmarkt/services/product/models"
 	"github.com/gin-gonic/gin"
 )
+
+const InternalServerErrorMessage string = "Something went wrong, try again later"
 
 // Function to setup the router and its routes
 func SetupRouter() *gin.Engine {
@@ -15,7 +18,10 @@ func SetupRouter() *gin.Engine {
 
 	// GET: All products
 	router.GET("/getall", func(c *gin.Context) {
-		products := productLogic.GetAll()
+		products, err := productLogic.GetAll()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": InternalServerErrorMessage})
+		}
 		c.JSON(http.StatusOK, products)
 	})
 
@@ -23,19 +29,15 @@ func SetupRouter() *gin.Engine {
 	router.GET("/getbyid/:id", func(c *gin.Context) {
 		id := c.Param("id")
 
-		// Convert id to an integer if fails return error
-		productId, err := strconv.Atoi(id)
-		if err != nil {
-			// Handle the case where id is not a valid integer
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
-			return
-		}
-
 		// Find the product with the given id and return it
-		product, err := productLogic.GetByID(productId)
+		product, err := productLogic.GetByID(id)
 		if err != nil {
-			// If no product found with given id return error
-			c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+			if err.Error() == "product not found" {
+				// If no product found with given id return error
+				c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+			} else {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": InternalServerErrorMessage})
+			}
 			return
 		}
 
@@ -49,11 +51,14 @@ func SetupRouter() *gin.Engine {
 		_type := c.Param("type")
 
 		// Find the products with the given type and return them
-		products := productLogic.GetByType(_type)
-
+		products, err := productLogic.GetByType(_type)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": InternalServerErrorMessage})
+			return
+		}
 		// Check if products is empty, if so return an error
 		if len(products) == 0 {
-			c.JSON(http.StatusNotFound, gin.H{"error": "Products not found"})
+			c.JSON(http.StatusNotFound, gin.H{"error": fmt.Sprintf("Products not found by type: %v", _type)})
 			return
 		}
 
@@ -73,15 +78,16 @@ func SetupRouter() *gin.Engine {
 		}
 
 		// Create the product
-		addedProduct, err := productLogic.Create(product)
+		newId, err := productLogic.Create(product)
 		if err != nil {
 			// Handle the case where product creation fails
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			log.Fatal(err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": InternalServerErrorMessage})
 			return
 		}
 
 		// Return the created product
-		c.JSON(http.StatusCreated, addedProduct)
+		c.JSON(http.StatusCreated, newId)
 	})
 
 	return router
