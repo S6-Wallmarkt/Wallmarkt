@@ -68,6 +68,9 @@ func GetProductByID(id string) (models.Product, error) {
 		return models.Product{}, errId
 	}
 
+	// Set id
+	product.ID = id
+
 	err := Collection.FindOne(context.TODO(), bson.M{"_id": objectID}).Decode(&product)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
