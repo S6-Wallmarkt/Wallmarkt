@@ -3,6 +3,7 @@ version: "3"
 services:
   #API gateway with Krakend
   krakend:
+    container_name: krakend-gateway
     build:
       context: /services/gateway
       dockerfile: Dockerfile
@@ -18,6 +19,7 @@ services:
 
   # Grafana dashboard to monitor the gateway
   grafana:
+    container_name: grafana
     build:
       context: /services/gateway/monitoring/grafana
       dockerfile: Dockerfile
@@ -34,6 +36,7 @@ services:
 
   # InfluxDB for storing telementric data of the gateway
   influxdb:
+    container_name: influxdb
     image: influxdb:1.8.10
     environment:
       - "INFLUXDB_DB=krakend"
@@ -44,12 +47,46 @@ services:
     ports:
       - "8086:8086"
 
+  # MongoDB + Seeder for development and testing purposes
+  mongodb:
+    container_name: mongo-developement
+    image: mongo:latest
+    ports:
+      - "${MONGO_PORT}"
+
+  mongo-seeder:
+    build:
+      context: ./mongo-seeder
+      dockerfile: Dockerfile
+    depends_on:
+      - mongodb
+
   #microservices
 
   #Product service
   product:
+    container_name: product-service
+    depends_on:
+      - mongodb
     build:
       context: /services/product
       dockerfile: Dockerfile
     ports:
-      - 8081:8081
+      - "${PRODUCT_PORT}:${PRODUCT_PORT}"
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - PORT=${PRODUCT_PORT}
+
+  #Product service
+  order:
+    container_name: order-service
+    depends_on:
+      - mongodb
+    build:
+      context: /services/order
+      dockerfile: Dockerfile
+    ports:
+      - "${ORDER_PORT}:${ORDER_PORT}"
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - PORT=${ORDER_PORT}

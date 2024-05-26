@@ -35,5 +35,5 @@ func Create(product models.Product) (string, error) {
 		log.Fatal(err)
 	}
 
-	return id.String(), nil
+	return id, nil
 }

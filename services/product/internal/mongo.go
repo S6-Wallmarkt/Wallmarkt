@@ -6,7 +6,6 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"errors"
-	"os"
 
 	"github.com/S6-Wallmarkt/Wallmarkt/services/product/models"
 	"go.mongodb.org/mongo-driver/bson"
@@ -35,7 +34,7 @@ func InitMongoDB(uri string) {
 var Collection *mongo.Collection
 
 func InitCollections() {
-	collection := Client.Database(os.Getenv("MONGO_DATABASE")).Collection(os.Getenv("MONGO_COLLECTION"))
+	collection := Client.Database("product").Collection("products")
 	Collection = collection
 }
 
@@ -102,26 +101,28 @@ func GetProductsWithType(_type string) ([]models.Product, error) {
 }
 
 // Create function to add products
-func CreateProduct(product models.Product) (primitive.ObjectID, error) {
+func CreateProduct(product models.Product) (string, error) {
 	// Generate a new ObjectID for the product
 	id := primitive.NewObjectID()
 
 	// Prepare the product document with the generated ID
 	productDocument := bson.M{
-		"_id":         id,
-		"name":        product.Name,
-		"description": product.Description,
-		"price":       product.Price,
-		"color":       product.Color,
-		"types":       product.Types,
+		"_id":             id,
+		"name":            product.Name,
+		"description":     product.Description,
+		"price":           product.Price,
+		"color":           product.Color,
+		"types":           product.Types,
+		"stock":           product.Stock,
+		"available_stock": product.AvailableStock,
 	}
 
 	// Insert the product document into the collection
 	result, err := Collection.InsertOne(context.TODO(), productDocument)
 	if err != nil {
-		return primitive.ObjectID{}, err
+		return "", err
 	}
 
 	// Return the inserted document's ID
-	return result.InsertedID.(primitive.ObjectID), nil
+	return result.InsertedID.(primitive.ObjectID).String(), nil
 }

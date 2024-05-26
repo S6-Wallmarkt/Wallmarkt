@@ -10,7 +10,6 @@ import (
 )
 
 func main() {
-
 	// Load the .env file
 	// Check if the --development flag is provided
 	if len(os.Args) > 1 && os.Args[1] == "--development" {
@@ -29,7 +28,7 @@ func main() {
 
 	// Set up router
 	router := router.SetupRouter()
-	err := router.Run(os.Getenv("PORT"))
+	err := router.Run(":" + os.Getenv("PORT"))
 	if err != nil {
 		panic(err)
 	}

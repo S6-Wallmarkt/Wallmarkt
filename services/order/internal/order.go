@@ -2,8 +2,12 @@ package internal
 
 import (
 	"github.com/S6-Wallmarkt/Wallmarkt/services/order/models"
+	"github.com/S6-Wallmarkt/Wallmarkt/services/order/repository"
 )
 
-func CreateOrder(order models.Order) (models.Order, error) {
-	return models.Order{}, nil
+var OrderRepository repository.OrderRepository
+
+func CreateOrder(order models.NewOrder) (string, error) {
+	OrderRepository.AddOrder()
+	return "", nil
 }
