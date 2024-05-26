@@ -4,7 +4,7 @@ FROM golang:1.22.1 AS builder
 # Set working directory
 WORKDIR /app
 
-ENV MONGO_URI = ${MONGO_URI}
+ENV MONGO_URI=${MONGO_URI}
 
 # Download Go modules
 COPY ./go.mod ./go.sum ./
