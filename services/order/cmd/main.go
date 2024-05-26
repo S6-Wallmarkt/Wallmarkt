@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	router "github.com/S6-Wallmarkt/Wallmarkt/services/product/api"
-	internal "github.com/S6-Wallmarkt/Wallmarkt/services/product/internal"
+	router "github.com/S6-Wallmarkt/Wallmarkt/services/order/api"
+	"github.com/S6-Wallmarkt/Wallmarkt/services/order/configs"
 	"github.com/joho/godotenv"
 	log "github.com/sirupsen/logrus"
 )
@@ -23,8 +23,8 @@ func main() {
 
 	// Set up database connection
 	mongodbUri := os.Getenv("MONGO_URI")
-	internal.InitMongoDB(mongodbUri)
-	internal.InitCollections()
+	configs.InitMongoDB(mongodbUri)
+	configs.InitCollections()
 
 	// Set up router
 	router := router.SetupRouter()
