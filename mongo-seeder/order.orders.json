@@ -1,0 +1,51 @@
+[
+  {
+    "_id": {
+      "$oid": "6656f34ace0c27ef71d06980"
+    },
+    "customer_id": "auth0|66538aa12019c08e25cb17b5",
+    "payed": true,
+    "shipped": false,
+    "products": ["6651d1e402fb7f8a4414e17e"]
+  },
+  {
+    "_id": {
+      "$oid": "6656f380ce0c27ef71d06981"
+    },
+    "customer_id": "auth0|66538aa12019c08e25cb17b5",
+    "payed": true,
+    "shipped": false,
+    "products": [
+      "6651d1aa02fb7f8a4414e17d",
+      "6651d1ec02fb7f8a4414e17f",
+      "6651d22c02fb7f8a4414e183"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6656f3c7ce0c27ef71d06982"
+    },
+    "customer_id": "facebook|12345",
+    "payed": true,
+    "shipped": false,
+    "products": ["6651d10a02fb7f8a4414e17b"]
+  },
+  {
+    "_id": {
+      "$oid": "6656f403ce0c27ef71d06983"
+    },
+    "products": ["6651d20d02fb7f8a4414e181"],
+    "customer_id": "github|12345",
+    "payed": true,
+    "shipped": false
+  },
+  {
+    "_id": {
+      "$oid": "6656f49ace0c27ef71d06984"
+    },
+    "payed": true,
+    "shipped": false,
+    "products": ["6651d25d02fb7f8a4414e188"],
+    "customer_id": "linkedin|12345"
+  }
+]
