@@ -109,42 +109,6 @@
   },
   {
     "_id": {
-      "$oid": "6651d23202fb7f8a4414e184"
-    },
-    "name": "Modern Wall Mirror",
-    "description": "A sleek gold mirror that adds a touch of luxury to any room.",
-    "price": 299,
-    "color": "Gold",
-    "types": ["Decoration", "Mirrors"],
-    "stock": 10,
-    "available_stock": 10
-  },
-  {
-    "_id": {
-      "$oid": "6651d23802fb7f8a4414e185"
-    },
-    "types": ["Decoration", "Mirrors"],
-    "name": "Modern Wall Mirror",
-    "description": "A sleek gold mirror that adds a touch of luxury to any room.",
-    "price": 299,
-    "color": "Gold",
-    "stock": 10,
-    "available_stock": 10
-  },
-  {
-    "_id": {
-      "$oid": "6651d23e02fb7f8a4414e186"
-    },
-    "name": "Modern Wall Mirror",
-    "description": "A sleek gold mirror that adds a touch of luxury to any room.",
-    "price": 299,
-    "color": "Gold",
-    "types": ["Decoration", "Mirrors"],
-    "stock": 10,
-    "available_stock": 10
-  },
-  {
-    "_id": {
       "$oid": "6651d24302fb7f8a4414e187"
     },
     "name": "Contemporary Bookcase",

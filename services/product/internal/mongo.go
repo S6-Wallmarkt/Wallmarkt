@@ -126,3 +126,19 @@ func CreateProduct(product models.Product) (string, error) {
 	// Return the inserted document's ID
 	return result.InsertedID.(primitive.ObjectID).String(), nil
 }
+
+// Delete function for products
+func DeleteProduct(productID string) error {
+	// turn id to objectID
+	objectID, errId := primitive.ObjectIDFromHex(productID)
+	if errId != nil {
+		log.Error(errId)
+		return errId
+	}
+	_, err := Collection.DeleteOne(context.TODO(), bson.M{"_id": objectID})
+	if err != nil {
+		log.Error(err)
+		return err
+	}
+	return nil
+}

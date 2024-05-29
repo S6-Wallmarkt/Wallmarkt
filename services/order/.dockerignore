@@ -1,0 +1,19 @@
+# Go-specific files
+*.a
+*.o
+bin/
+
+# Logs and temporary files
+tmp/
+logs/
+
+# Environment configuration
+.env
+
+# Docker and Docker Compose files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Go test files
+*_test.go
