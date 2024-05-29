@@ -78,15 +78,15 @@ services:
       - PORT=${PRODUCT_PORT}
 
   #Product service
-  order:
-    container_name: order-service
-    depends_on:
-      - mongodb
-    build:
-      context: /services/order
-      dockerfile: Dockerfile
-    ports:
-      - "${ORDER_PORT}:${ORDER_PORT}"
-    environment:
-      - MONGO_URI=${MONGO_URI}
-      - PORT=${ORDER_PORT}
+  # order:
+  #   container_name: order-service
+  #   depends_on:
+  #     - mongodb
+  #   build:
+  #     context: /services/order
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "${ORDER_PORT}:${ORDER_PORT}"
+  #   environment:
+  #     - MONGO_URI=${MONGO_URI}
+  #     - PORT=${ORDER_PORT}
