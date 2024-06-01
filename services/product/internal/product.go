@@ -37,3 +37,11 @@ func Create(product models.Product) (string, error) {
 
 	return id, nil
 }
+
+func Delete(productID string) error {
+	err := DeleteProduct(productID)
+	if err != nil {
+		return err
+	}
+	return nil
+}

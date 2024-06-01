@@ -90,5 +90,21 @@ func SetupRouter() *gin.Engine {
 		c.JSON(http.StatusCreated, newId)
 	})
 
+	// DELETE: Delete product
+	router.DELETE("/delete/:id", func(c *gin.Context) {
+		productID := c.Param("id")
+
+		// Delete the product
+		err := productLogic.Delete(productID)
+		if err != nil {
+			// Handle the case where deleting fails
+			c.JSON(http.StatusInternalServerError, gin.H{"error": InternalServerErrorMessage})
+			return
+		}
+
+		// Return the created product
+		c.JSON(http.StatusOK, fmt.Sprintf("Deleted item %v", productID))
+	})
+
 	return router
 }

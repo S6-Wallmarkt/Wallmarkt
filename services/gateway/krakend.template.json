@@ -74,6 +74,169 @@
           "disable_host_sanitize": false
         }
       ]
+    },
+    {
+      "endpoint": "/product/delete/{id}",
+      "method": "DELETE",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/delete/{id}",
+          "method": "DELETE",
+          "sd": "static",
+          "host": ["http://product:8081"],
+          "disable_host_sanitize": false
+        }
+      ],
+      "input_query_strings": ["id"]
+    },
+    {
+      "endpoint": "/order/add",
+      "method": "POST",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/add",
+          "encoding": "json",
+          "sd": "static",
+          "method": "POST",
+          "host": ["http://order:8082"],
+          "disable_host_sanitize": false
+        }
+      ]
+    },
+    {
+      "endpoint": "/order/getbycustomer/{id}",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/getbycustomer/{id}",
+          "method": "GET",
+          "sd": "static",
+          "host": ["http://order:8082"],
+          "disable_host_sanitize": false
+        }
+      ],
+      "input_query_strings": ["id"]
+    },
+    {
+      "endpoint": "/order/getbyid/{id}",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/getbyid/{id}",
+          "method": "GET",
+          "sd": "static",
+          "host": ["http://order:8082"],
+          "disable_host_sanitize": false
+        }
+      ],
+      "input_query_strings": ["id"]
+    },
+    {
+      "endpoint": "/order/getall",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/getall",
+          "method": "GET",
+          "sd": "static",
+          "host": ["http://order:8082"],
+          "disable_host_sanitize": false
+        }
+      ],
+      "input_query_strings": ["id"]
+    },
+    {
+      "endpoint": "/order/delete/{id}",
+      "method": "DELETE",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/delete/{id}",
+          "method": "DELETE",
+          "sd": "static",
+          "host": ["http://order:8082"],
+          "disable_host_sanitize": false
+        }
+      ],
+      "input_query_strings": ["id"]
+    },
+    {
+      "endpoint": "/shipping/add",
+      "method": "POST",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/add",
+          "encoding": "json",
+          "sd": "static",
+          "method": "POST",
+          "host": ["http://shipping:8083"],
+          "disable_host_sanitize": false
+        }
+      ]
+    },
+    {
+      "endpoint": "/shipping/getbyid/{id}",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/getbyid/{id}",
+          "method": "GET",
+          "sd": "static",
+          "host": ["http://shipping:8083"],
+          "disable_host_sanitize": false
+        }
+      ],
+      "input_query_strings": ["id"]
+    },
+    {
+      "endpoint": "/shipping/getall",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/getall",
+          "method": "GET",
+          "sd": "static",
+          "host": ["http://shipping:8083"],
+          "disable_host_sanitize": false
+        }
+      ]
+    },
+    {
+      "endpoint": "/shipping/getallunsend",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/getallunsend",
+          "method": "GET",
+          "sd": "static",
+          "host": ["http://shipping:8083"],
+          "disable_host_sanitize": false
+        }
+      ]
+    },
+    {
+      "endpoint": "/shipping/delete/{id}",
+      "method": "DELETE",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/delete/{id}",
+          "method": "DELETE",
+          "sd": "static",
+          "host": ["http://shipping:8083"],
+          "disable_host_sanitize": false
+        }
+      ],
+      "input_query_strings": ["id"]
     }
   ],
   "extra_config": {

@@ -1,0 +1,48 @@
+name: Test & Lint product-service
+
+on:
+  pull_request:
+    # Only run workflow for pull requests to the development branch
+    types: [opened, synchronize, reopened]
+    branches:
+      - development
+    # Only run workflow for changes in the order service
+    paths:
+      - "services/shipping/**"
+      - ".github/workflows/release-shipping-service.yml"
+  workflow_dispatch:
+
+jobs:
+  #test building the go project
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/shipping
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.22.1
+      - name: Run tests
+        run: go test ./services/shipping/...
+
+  golangci-lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.22.1
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@v4
+        with:
+          version: v1.54
+          working-directory: services/shipping
+          args: --timeout 5m
