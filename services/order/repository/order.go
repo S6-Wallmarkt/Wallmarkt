@@ -130,7 +130,7 @@ func (p OrderRepository) DeleteOrder(orderID string) error {
 		return errId
 	}
 
-	// Find all orders
+	// Delete shipment
 	_, err := configs.Collection.DeleteOne(ctx, bson.M{"_id": objectID})
 	if err != nil {
 		log.Error(err)

@@ -19,6 +19,8 @@ func main() {
 		if err != nil {
 			log.Fatal("Error loading .env file")
 		}
+	} else {
+		log.SetLevel(log.InfoLevel)
 	}
 
 	// Set up database connection
@@ -28,7 +30,7 @@ func main() {
 
 	// Set up router
 	router := router.SetupRouter()
-	err := router.Run(":" + os.Getenv("PORT"))
+	err := router.Run(":8083")
 	if err != nil {
 		panic(err)
 	}

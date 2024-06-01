@@ -113,3 +113,25 @@ func (p ShipmentRepository) GetAllUnsendShipments() ([]models.Shipment, error) {
 
 	return shipments, nil
 }
+
+func (p ShipmentRepository) DeleteShipment(shipmentID string) error {
+	// Set up context and close when done
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	// Turn into objectID
+	objectID, errId := primitive.ObjectIDFromHex(shipmentID)
+	if errId != nil {
+		log.Error(errId)
+		return errId
+	}
+
+	// Delete shipment
+	_, err := configs.Collection.DeleteOne(ctx, bson.M{"_id": objectID})
+	if err != nil {
+		log.Error(err)
+		return err
+	}
+
+	return nil
+}

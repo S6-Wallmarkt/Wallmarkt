@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 
 	shippingLogic "github.com/S6-Wallmarkt/Wallmarkt/services/shipping/internal"
@@ -87,6 +88,17 @@ func SetupRouter() *gin.Engine {
 		}
 
 		c.JSON(http.StatusOK, shipments)
+	})
+
+	// DELETE: Delete shipment
+	router.DELETE("/delete/:id", func(c *gin.Context) {
+		shipmentID := c.Param("id")
+
+		err := shippingLogic.Delete(shipmentID)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": internalServerErrorMessage})
+		}
+		c.JSON(http.StatusOK, fmt.Sprintf("Deleted shipment: %v", shipmentID))
 	})
 	return router
 }

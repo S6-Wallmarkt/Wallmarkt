@@ -42,3 +42,11 @@ func GetAllUnsend() ([]models.Shipment, error) {
 	}
 	return shipments, nil
 }
+
+func Delete(shipmentID string) error {
+	err := ShipmentRepository.DeleteShipment(shipmentID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
