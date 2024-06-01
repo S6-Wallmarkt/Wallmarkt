@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	router "github.com/S6-Wallmarkt/Wallmarkt/services/order/api"
-	"github.com/S6-Wallmarkt/Wallmarkt/services/order/configs"
+	router "github.com/S6-Wallmarkt/Wallmarkt/services/shipping/api"
+	"github.com/S6-Wallmarkt/Wallmarkt/services/shipping/configs"
 	"github.com/joho/godotenv"
 	log "github.com/sirupsen/logrus"
 )
@@ -30,7 +30,7 @@ func main() {
 
 	// Set up router
 	router := router.SetupRouter()
-	err := router.Run(":8082")
+	err := router.Run(":8083")
 	if err != nil {
 		panic(err)
 	}
