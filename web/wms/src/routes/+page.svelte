@@ -1,5 +1,7 @@
 <svelte:head>
-	<title>WMS</title>
+	<title>Wallmarkt WMS</title>
 </svelte:head>
 
-<h1 class="text-slate-700">Welcome to Wallmarkt WMS</h1>
+<div class="p-4">
+	<h1>This is the Home page</h1>
+</div>

@@ -1,0 +1,146 @@
+[
+  {
+    "_id": {
+      "$oid": "6651d10a02fb7f8a4414e17b"
+    },
+    "color": "brown",
+    "types": ["Lighting", "Decoration", "Firelit"],
+    "name": "Wall-mounted torch",
+    "description": "Torch that can be mounted to walls to provide ambient lighting",
+    "price": 999,
+    "stock": 10,
+    "available_stock": 10
+  },
+  {
+    "_id": {
+      "$oid": "6651d14302fb7f8a4414e17c"
+    },
+    "price": 9000,
+    "color": "brown",
+    "types": ["Decoration", "Creepy", "Fur"],
+    "name": "Deer head mount",
+    "description": "Realistic deer head mounted to your wall",
+    "stock": 10,
+    "available_stock": 10
+  },
+  {
+    "_id": {
+      "$oid": "6651d1aa02fb7f8a4414e17d"
+    },
+    "price": 500,
+    "color": "white",
+    "types": ["Decoration", "Art"],
+    "name": "Minecraft painting",
+    "description": "Minecraft inspired painting for your wall",
+    "stock": 10,
+    "available_stock": 10
+  },
+  {
+    "_id": {
+      "$oid": "6651d1e402fb7f8a4414e17e"
+    },
+    "name": "Vintage Map Frame",
+    "description": "An antique map framed beautifully for your home decor.",
+    "price": 450,
+    "color": "Brown",
+    "types": ["Decoration", "Art"],
+    "stock": 10,
+    "available_stock": 10
+  },
+  {
+    "_id": {
+      "$oid": "6651d1ec02fb7f8a4414e17f"
+    },
+    "name": "Modern Abstract Print",
+    "description": "A contemporary abstract print that adds a pop of color to your space.",
+    "price": 650,
+    "color": "Red",
+    "types": ["Art", "Decoration"],
+    "stock": 10,
+    "available_stock": 10
+  },
+  {
+    "_id": {
+      "$oid": "6651d20702fb7f8a4414e180"
+    },
+    "name": "Nature Inspired Wall Tapestry",
+    "description": "A beautiful tapestry featuring nature scenes to bring the outdoors indoors.",
+    "price": 700,
+    "color": "Green",
+    "types": ["Decoration", "Home Decor"],
+    "stock": 10,
+    "available_stock": 10
+  },
+  {
+    "_id": {
+      "$oid": "6651d20d02fb7f8a4414e181"
+    },
+    "types": ["Art", "Sculpture"],
+    "name": "Minimalist Geometric Sculpture",
+    "description": "A minimalist sculpture that adds a modern touch to your decor.",
+    "price": 800,
+    "color": "Silver",
+    "stock": 10,
+    "available_stock": 10
+  },
+  {
+    "_id": {
+      "$oid": "6651d21602fb7f8a4414e182"
+    },
+    "name": "Handcrafted Wooden Sign",
+    "description": "A handcrafted wooden sign with a personalized message for your home.",
+    "price": 550,
+    "color": "Wood",
+    "types": ["Home Decor", "Signage"],
+    "stock": 10,
+    "available_stock": 10
+  },
+  {
+    "_id": {
+      "$oid": "6651d22c02fb7f8a4414e183"
+    },
+    "name": "Modern Wall Mirror",
+    "description": "A sleek gold mirror that adds a touch of luxury to any room.",
+    "price": 299,
+    "color": "Gold",
+    "types": ["Decoration", "Mirrors"],
+    "stock": 10,
+    "available_stock": 10
+  },
+  {
+    "_id": {
+      "$oid": "6651d24302fb7f8a4414e187"
+    },
+    "name": "Contemporary Bookcase",
+    "description": "A stylish bookcase designed for modern spaces, available in three colors.",
+    "price": 400,
+    "color": "Black",
+    "types": ["Home Decor", "Bookcase"],
+    "stock": 10,
+    "available_stock": 10
+  },
+  {
+    "_id": {
+      "$oid": "6651d25d02fb7f8a4414e188"
+    },
+    "types": ["Wallpaper", "Vintage"],
+    "name": "Cigarettes Wallpaper",
+    "description": "A bold and unconventional wallpaper featuring cigarettes, adding a vintage flair to any room.",
+    "price": 1200,
+    "color": "Various",
+    "stock": 10,
+    "available_stock": 10
+  },
+  {
+    "_id": {
+      "$oid": "6651d26402fb7f8a4414e189"
+    },
+    "price": 850,
+    "color": "Black and Red",
+    "types": ["Art", "Horror"],
+    "name": "Monster Wall Art",
+    "description": "A striking piece of monster-themed wall art, perfect for those who love horror and fantasy.",
+    "stock": 10,
+    "available_stock": 10
+  }
+]
