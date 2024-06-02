@@ -12,7 +12,7 @@ test.beforeEach(async ({ page }) => {
 	await page1.getByLabel('Email address*').click();
 	await page1.getByLabel('Email address*').fill(process.env.PLAYWRIGHT_USERNAME || '');
 	await page1.getByRole('button', { name: 'Continue', exact: true }).click();
-	await page.waitForTimeout(1000);
+	await page.waitForTimeout(3000);
 });
 
 test('User can log in using Auth0 SPA SDK and see menu', async ({ page }) => {
@@ -22,6 +22,7 @@ test('User can log in using Auth0 SPA SDK and see menu', async ({ page }) => {
 
 test('User can see products', async ({ page }) => {
 	await page.reload();
+	await page.waitForTimeout(1000);
 	await page.getByRole('link', { name: 'Products' }).click();
 	await expect(await page.getByText('Minecraft painting Minecraft')).toBeEnabled();
 	await expect(await page.getByText('Deer head mount Realistic')).toBeEnabled();
@@ -29,6 +30,7 @@ test('User can see products', async ({ page }) => {
 
 test('User can see orders', async ({ page }) => {
 	await page.reload();
+	await page.waitForTimeout(1000);
 	await page.getByRole('link', { name: 'Orders' }).click();
 	await expect(
 		await page.getByText('facebook|12345 6651d10a02fb7f8a4414e17b Payed Shipped')
@@ -38,6 +40,7 @@ test('User can see orders', async ({ page }) => {
 
 test('User can see shipments', async ({ page }) => {
 	await page.reload();
+	await page.waitForTimeout(1000);
 	await page.getByRole('link', { name: 'Shipments' }).click();
 	await expect(await page.getByText('6656f403ce0c27ef71d06983 2024')).toBeEnabled();
 	await expect(await page.getByText('6656f34ace0c27ef71d06980 2024')).toBeEnabled();
