@@ -71,10 +71,18 @@ services:
     build:
       context: ./web/wms
       dockerfile: Dockerfile
+      args:
+        AUTH0_DOMAIN: ${AUTH0_DOMAIN}
+        AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
+        AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
+        GATEWAY_BASE: ${GATEWAY_BASE}
     ports:
       - "5173:3000"
-    env_file:
-      - ./web/wms/.env.prod
+    environment:
+      - AUTH0_DOMAIN=${AUTH0_DOMAIN}
+      - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
+      - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
+      - GATEWAY_BASE=${GATEWAY_BASE}
 
   #Product service
   product:
