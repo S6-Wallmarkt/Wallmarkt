@@ -63,6 +63,19 @@ services:
 
   #microservices
 
+  # WMS frontend
+  wms:
+    container_name: wms-frontend
+    depends_on:
+      - krakend
+    build:
+      context: ./web/wms
+      dockerfile: Dockerfile
+    ports:
+      - "5173:3000"
+    env_file:
+      - ./web/wms/.env.prod
+
   #Product service
   product:
     container_name: product-service

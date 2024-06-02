@@ -7,7 +7,9 @@
 
 	let tabs = [
 		{ name: 'Home', href: '/' },
-		{ name: 'Products', href: '/products' }
+		{ name: 'Products', href: '/products' },
+		{ name: 'Orders', href: '/orders' },
+		{ name: 'Shipments', href: '/shipments' }
 	];
 </script>
 
