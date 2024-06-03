@@ -9,17 +9,14 @@ on:
     # Only run workflow for changes in the product service
     paths:
       - "services/product/**"
-      - ".github/workflows/release-product-service.yml"
+      - ".github/workflows/test-lint-product-service.yml"
   workflow_dispatch:
 
 jobs:
-  #test building the go project
-  test:
-    name: Test
+  # Test building the go project
+  build:
+    name: Building product service
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: services/product
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,10 +24,12 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: 1.22.1
-      - name: Run tests
-        run: go test ./services/product/...
+      - name: Building
+        run: go build ./services/product/cmd/main.go
 
+  # Run linter for readability
   golangci-lint:
+    needs: build
     name: Lint
     runs-on: ubuntu-latest
     steps:
@@ -46,3 +45,21 @@ jobs:
           version: v1.54
           working-directory: services/product
           args: --timeout 5m
+
+  # Test unit tests
+  test:
+    needs: build
+    name: Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/product
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.22.1
+      - name: Run tests
+        run: go test ./services/product/...
