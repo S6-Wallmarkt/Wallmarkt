@@ -1,4 +1,4 @@
-name: Test & Lint product-service
+name: Test & Lint shipping-service
 
 on:
   pull_request:
@@ -9,17 +9,14 @@ on:
     # Only run workflow for changes in the order service
     paths:
       - "services/shipping/**"
-      - ".github/workflows/release-shipping-service.yml"
+      - ".github/workflows/test-lint-shipping-service.yml"
   workflow_dispatch:
 
 jobs:
-  #test building the go project
-  test:
-    name: Test
+  # Test building the go project
+  build:
+    name: Building shipping service
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: services/shipping
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,10 +24,12 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: 1.22.1
-      - name: Run tests
-        run: go test ./services/shipping/...
+      - name: Building
+        run: go build ./services/shipping/cmd/main.go
 
+  # Run linter for readability
   golangci-lint:
+    needs: build
     name: Lint
     runs-on: ubuntu-latest
     steps:
@@ -46,3 +45,21 @@ jobs:
           version: v1.54
           working-directory: services/shipping
           args: --timeout 5m
+
+  # Test unit tests
+  test:
+    needs: build
+    name: Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/shipping
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.22.1
+      - name: Run tests
+        run: go test ./services/shipping/...

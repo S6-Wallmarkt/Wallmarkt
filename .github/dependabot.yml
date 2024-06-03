@@ -9,7 +9,14 @@ updates:
     directory: "/services/product"
     schedule:
       interval: "daily"
-      updates:
+  - package-ecosystem: "gomod"
+    directory: "/services/order"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gomod"
+    directory: "/services/shipping"
+    schedule:
+      interval: "daily"
   - package-ecosystem: "npm"
     directory: "/web/wms"
     schedule:
