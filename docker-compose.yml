@@ -1,12 +1,14 @@
 # Debug docker-compose file
 version: "3"
 services:
-  #API gateway with Krakend
+  # API gateway with Krakend
   krakend:
     container_name: krakend-gateway
     build:
-      context: /services/gateway
+      context: ./services/gateway
       dockerfile: Dockerfile
+    depends_on:
+      - influxdb
     ports:
       - 8080:8080
     environment:
@@ -21,8 +23,10 @@ services:
   grafana:
     container_name: grafana
     build:
-      context: /services/gateway/monitoring/grafana
+      context: ./services/gateway/monitoring/grafana
       dockerfile: Dockerfile
+    depends_on:
+      - krakend
     ports:
       - "4000:3000"
     environment:
@@ -61,41 +65,62 @@ services:
     depends_on:
       - mongodb
 
-  #microservices
+  # Microservices
 
-  #Product service
+  # WMS frontend
+  wms:
+    container_name: wms-frontend
+    depends_on:
+      - krakend
+    build:
+      context: ./web/wms
+      dockerfile: Dockerfile
+      args:
+        AUTH0_DOMAIN: ${AUTH0_DOMAIN}
+        AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
+        AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
+        GATEWAY_BASE: ${GATEWAY_BASE}
+    ports:
+      - "5173:3000"
+    environment:
+      - AUTH0_DOMAIN=${AUTH0_DOMAIN}
+      - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
+      - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
+      - GATEWAY_BASE=${GATEWAY_BASE}
+
+  # Product service
   product:
     container_name: product-service
     depends_on:
       - mongodb
     build:
-      context: /services/product
+      context: ./services/product
       dockerfile: Dockerfile
     ports:
       - "8081:8081"
     environment:
       - MONGO_URI=${MONGO_URI}
 
-  #Order service
+  # Order service
   order:
     container_name: order-service
     depends_on:
       - mongodb
     build:
-      context: /services/order
+      context: ./services/order
       dockerfile: Dockerfile
     ports:
       - "8082:8082"
     environment:
       - MONGO_URI=${MONGO_URI}
 
-        #Order service
+  # Shipping service
   shipping:
     container_name: shipping-service
     depends_on:
       - mongodb
     build:
-      context: /services/shipping
+      context: ./services/shipping
       dockerfile: Dockerfile
     ports:
       - "8083:8083"

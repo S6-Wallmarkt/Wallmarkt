@@ -13,7 +13,7 @@
 				<div class="card p-4 m-4 space-y-2 variant-glass-primary">
 					<h2 class="">{product.name}</h2>
 					<p>{product.description}</p>
-					<p>€ {product.price}</p>
+					<p>€ {product.price / 100}</p>
 					<div class="space-x-2">
 						{#each product.types as type}
 							<span class="chip variant-filled-secondary">{type}</span>

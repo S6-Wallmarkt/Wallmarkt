@@ -1,0 +1,49 @@
+name: E2E testing
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    environment: e2e tests
+    env:
+      AUTH0_AUDIENCE: ${{secrets.AUTH0_AUDIENCE}}
+      AUTH0_CLIENT_ID: ${{secrets.AUTH0_CLIENT_ID}}
+      AUTH0_DOMAIN: ${{secrets.AUTH0_DOMAIN}}
+      GATEWAY_BASE: ${{secrets.GATEWAY_BASE}}
+      GF_SECURITY_ADMIN_PASSWORD: ${{secrets.GF_SECURITY_ADMIN_PASSWORD}}
+      GF_SECURITY_ADMIN_USER: ${{secrets.GF_SECURITY_ADMIN_USER}}
+      INFLUX_ADMIN_PASSWORD: ${{secrets.INFLUX_ADMIN_PASSWORD}}
+      INFLUX_ADMIN_USER: ${{secrets.INFLUX_ADMIN_USER}}
+      INFLUX_HOST: ${{secrets.INFLUX_HOST}}
+      INFLUX_PORT: ${{secrets.INFLUX_PORT}}
+      INFLUX_USER: ${{secrets.INFLUX_USER}}
+      INFLUX_USER_PASSWORD: ${{secrets.INFLUX_USER_PASSWORD}}
+      MONGO_PORT: ${{secrets.MONGO_PORT}}
+      MONGO_URI: ${{secrets.MONGO_URI}}
+      PLAYWRIGHT_USERNAME: ${{secrets.PLAYWRIGHT_USERNAME}}
+      PLAYWRIGHT_PASSWORD: ${{secrets.PLAYWRIGHT_PASSWORD}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Install Docker Compose
+        run: sudo apt-get update && sudo apt-get install -y docker-compose
+      - name: Start Docker Compose
+        run: docker-compose up -d --build
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      - name: Move to Web/WMS Directory and Run Tests
+        run: |
+          cd web/wms
+          pnpm install
+          pnpm playwright install
+          pnpm exec playwright install-deps
+          PLAYWRIGHT_USERNAME=$PLAYWRIGHT_USERNAME PLAYWRIGHT_PASSWORD=$PLAYWRIGHT_PASSWORD npx playwright test

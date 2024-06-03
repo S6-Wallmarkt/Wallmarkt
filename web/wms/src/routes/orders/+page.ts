@@ -14,7 +14,7 @@ export async function load({ fetch }) {
 		}
 
 		// Include the access token in the Authorization header
-		const response = await fetch(import.meta.env.VITE_GATEWAY_BASE + '/product/getall', {
+		const response = await fetch(import.meta.env.VITE_GATEWAY_BASE + '/order/getall', {
 			headers: {
 				Authorization: `Bearer ${token}`
 			}
@@ -24,10 +24,10 @@ export async function load({ fetch }) {
 			throw new Error('Network response was not ok');
 		}
 
-		const products = await response.json();
-		return { props: { products } };
+		const orders = await response.json();
+		return { props: { orders } };
 	} catch (error) {
-		console.error('Failed to fetch products:', error);
+		console.error('Failed to fetch orders:', error);
 		redirect(302, '/');
 	}
 }
