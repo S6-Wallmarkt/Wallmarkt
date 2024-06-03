@@ -5,7 +5,7 @@
     },
     "customer_id": "auth0|66538aa12019c08e25cb17b5",
     "payed": true,
-    "shipped": false,
+    "shipped": true,
     "products": ["6651d1e402fb7f8a4414e17e"]
   },
   {
