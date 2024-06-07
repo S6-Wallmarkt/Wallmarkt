@@ -9,15 +9,19 @@ updates:
     directory: "/services/product"
     schedule:
       interval: "daily"
+    target-branch: "development"
   - package-ecosystem: "gomod"
     directory: "/services/order"
     schedule:
       interval: "daily"
+    target-branch: "development"
   - package-ecosystem: "gomod"
     directory: "/services/shipping"
     schedule:
       interval: "daily"
+    target-branch: "development"
   - package-ecosystem: "npm"
     directory: "/web/wms"
     schedule:
       interval: "daily"
+    target-branch: "development"
