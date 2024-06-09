@@ -23,6 +23,9 @@ jobs:
       INFLUX_PORT: ${{secrets.INFLUX_PORT}}
       INFLUX_USER: ${{secrets.INFLUX_USER}}
       INFLUX_USER_PASSWORD: ${{secrets.INFLUX_USER_PASSWORD}}
+      PRODUCT_URL: ${{secrets.PRODUCT_URL}}
+      ORDER_URL: ${{secrets.ORDER_URL}}
+      SHIPPING_URL: ${{secrets.SHIPPING_URL}}
       MONGO_PORT: ${{secrets.MONGO_PORT}}
       MONGO_URI: ${{secrets.MONGO_URI}}
       PLAYWRIGHT_USERNAME: ${{secrets.PLAYWRIGHT_USERNAME}}

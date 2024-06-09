@@ -18,6 +18,9 @@ services:
       - INFLUX_USER_PASSWORD=${INFLUX_USER_PASSWORD}
       - AUTH0_DOMAIN=${AUTH0_DOMAIN}
       - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
+      - PRODUCT_URL=${PRODUCT_URL}
+      - ORDER_URL=${ORDER_URL}
+      - SHIPPING_URL=${SHIPPING_URL}
 
   # Grafana dashboard to monitor the gateway
   grafana:
