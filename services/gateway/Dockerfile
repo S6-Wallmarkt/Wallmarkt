@@ -27,5 +27,7 @@ RUN chown -R nonroot:nonroot /etc/krakend
 # Set the nonroot user
 USER nonroot
 
+EXPOSE 8080 80 443
+
 # Set the entrypoint to run envsubst and start KrakenD based on the template
 CMD envsubst < /etc/krakend/krakend.template.json > /etc/krakend/krakend.json && krakend run -c /etc/krakend/krakend.json
