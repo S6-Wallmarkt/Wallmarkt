@@ -32,7 +32,7 @@ COPY --from=builder /app/wallmarkt-order-service /wallmarkt-order-service
 USER nonroot
 
 # Expose the port
-EXPOSE 8082
+EXPOSE 8082 80 443
 
 # Run the binary
 CMD ["/wallmarkt-order-service"]
