@@ -1,0 +1,47 @@
+name: Trigger auto deployment for product-service
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '/services/product/**'
+    - '.github/workflows/product-service-AutoDeployTrigger-2931ca9d-9d41-4f98-81a0-33f5e263bc00.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.PRODUCTSERVICE_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.PRODUCTSERVICE_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.PRODUCTSERVICE_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}/services/product 
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.PRODUCTSERVICE_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.PRODUCTSERVICE_REGISTRY_PASSWORD }}
+          containerAppName: product-service
+          resourceGroup: Wallmarkt
+          imageToBuild: rensvangiersbergen/product-service:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_
+
+
