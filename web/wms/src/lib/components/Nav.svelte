@@ -2,6 +2,7 @@
 	import { LightSwitch, Avatar, TabGroup, TabAnchor } from '@skeletonlabs/skeleton';
 	import { page } from '$app/stores';
 	import { isAuthenticated, user } from '$lib/stores/auth';
+	import { goto } from '$app/navigation';
 	export let login: () => void;
 	export let logout: () => void;
 
@@ -28,6 +29,11 @@
 			{/if}
 		{/each}
 	</TabGroup>
+	<div>
+		<a href="/privacy-policy">
+			<button type="button" class="btn variant-filled-primary">Privacy policy</button>
+		</a>
+	</div>
 	<div>
 		<LightSwitch />
 	</div>
