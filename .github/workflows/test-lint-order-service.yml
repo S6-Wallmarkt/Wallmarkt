@@ -17,6 +17,8 @@ jobs:
   build:
     name: Building order service
     runs-on: ubuntu-latest
+    env:
+      MONGO_URI: mongodb://localhost:27017
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
