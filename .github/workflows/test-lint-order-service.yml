@@ -54,6 +54,9 @@ jobs:
     needs: build
     name: Test
     runs-on: ubuntu-latest
+    env:
+      MONGO_PORT: 27017:27017
+      MONGO_URI: mongodb://localhost:27017
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
