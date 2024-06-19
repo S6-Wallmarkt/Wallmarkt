@@ -69,7 +69,7 @@ func SetupRouter() *gin.Engine {
 
 		order, err := orderLogic.GetByID(orderID)
 		if err != nil {
-			if err.Error() == "product not found" {
+			if err.Error() == "order not found" {
 				c.JSON(http.StatusNotFound, gin.H{"error": "order not found"})
 				return
 			} else {

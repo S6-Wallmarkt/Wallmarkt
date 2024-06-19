@@ -87,7 +87,7 @@ func (p OrderRepository) GetOrderByID(orderID string) (models.Order, error) {
 	err := configs.Collection.FindOne(ctx, bson.M{"_id": objectID}).Decode(&order)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return models.Order{}, errors.New("product not found")
+			return models.Order{}, errors.New("order not found")
 		}
 		log.Error(err)
 		return models.Order{}, err

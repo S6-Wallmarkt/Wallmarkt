@@ -27,6 +27,14 @@ jobs:
       - name: Building
         run: go build ./services/order/cmd/main.go
 
+  init-mongo:
+    needs: build
+    name: Initializing mongodb
+    runs-on: ubuntu-latest
+    steps:
+      - name: run database and seeder
+        run: docker compose up mongodb mongo-seeder -d
+
   # Run linter for readability
   golangci-lint:
     needs: build
@@ -48,7 +56,7 @@ jobs:
 
   # Test unit tests
   test:
-    needs: build
+    needs: init-mongo
     name: Test
     runs-on: ubuntu-latest
     defaults:
