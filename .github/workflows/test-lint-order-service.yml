@@ -44,7 +44,6 @@ jobs:
 
   # Run linter for readability
   golangci-lint:
-    needs: build
     name: Lint
     runs-on: ubuntu-latest
     steps:
