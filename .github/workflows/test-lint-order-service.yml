@@ -18,6 +18,8 @@ jobs:
     name: Initializing mongodb
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: run database and seeder
         run: docker compose up mongodb mongo-seeder -d
 
