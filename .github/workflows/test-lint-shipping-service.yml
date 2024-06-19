@@ -25,7 +25,9 @@ jobs:
         with:
           go-version: 1.22.1
       - name: Building
-        run: go build ./services/shipping/cmd/main.go
+        run: |
+          cd services/order
+          go run cmd/main.go
 
   # Run linter for readability
   golangci-lint:
