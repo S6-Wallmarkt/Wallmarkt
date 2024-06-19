@@ -17,6 +17,8 @@ jobs:
   init-mongo:
     name: Initializing mongodb
     runs-on: ubuntu-latest
+    env:
+      MONGO_PORT: 27017:27017
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
