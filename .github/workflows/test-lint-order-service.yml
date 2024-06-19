@@ -2,10 +2,8 @@ name: Test & Lint order-service
 
 on:
   pull_request:
-    # Only run workflow for pull requests to the development branch
+    # Only run workflow for pull requests
     types: [opened, synchronize, reopened]
-    branches:
-      - development
     # Only run workflow for changes in the order service
     paths:
       - "services/order/**"

@@ -2,11 +2,9 @@ name: Test & Lint shipping-service
 
 on:
   pull_request:
-    # Only run workflow for pull requests to the development branch
+    # Only run workflow for pull requests
     types: [opened, synchronize, reopened]
-    branches:
-      - development
-    # Only run workflow for changes in the order service
+    # Only run workflow for changes in the shipping service
     paths:
       - "services/shipping/**"
       - ".github/workflows/test-lint-shipping-service.yml"
@@ -26,8 +24,8 @@ jobs:
           go-version: 1.22.1
       - name: Building
         run: |
-          cd services/order
-          go run cmd/main.go
+          cd services/shipping
+          go build cmd/main.go
 
   # Run linter for readability
   golangci-lint:
@@ -53,9 +51,6 @@ jobs:
     needs: build
     name: Test
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: services/shipping
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -64,4 +59,6 @@ jobs:
         with:
           go-version: 1.22.1
       - name: Run tests
-        run: go test ./services/shipping/...
+        run: |
+          cd services/shipping
+          go test ./...

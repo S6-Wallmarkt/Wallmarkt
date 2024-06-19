@@ -2,10 +2,8 @@ name: Test & Lint product-service
 
 on:
   pull_request:
-    # Only run workflow for pull requests to the development branch
+    # Only run workflow for pull requests
     types: [opened, synchronize, reopened]
-    branches:
-      - development
     # Only run workflow for changes in the product service
     paths:
       - "services/product/**"
@@ -27,7 +25,7 @@ jobs:
       - name: Building
         run: |
           cd services/product
-          go run cmd/main.go
+          go build cmd/main.go
 
   # Run linter for readability
   golangci-lint:
@@ -53,9 +51,6 @@ jobs:
     needs: build
     name: Test
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: services/product
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -64,4 +59,6 @@ jobs:
         with:
           go-version: 1.22.1
       - name: Run tests
-        run: go test ./services/product/...
+        run: |
+          cd services/product
+          go test ./...
