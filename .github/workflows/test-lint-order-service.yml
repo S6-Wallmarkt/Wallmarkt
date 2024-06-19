@@ -29,7 +29,7 @@ jobs:
       - name: Building
         run: |
           cd services/order
-          go run cmd/main.go
+          go build cmd/main.go
 
   # Run linter for readability
   golangci-lint:
